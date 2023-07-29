@@ -3,7 +3,19 @@
     <style name="Base.Theme.Harupiece" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#4CAF50</item>
     </style>
 
-    <style name="Theme.Harupiece" parent="Base.Theme.Harupiece" />
+    <style name="Theme.Harupiece.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="colorPrimary">@color/material_dynamic_tertiary99</item>
+    </style>
+
+    <!-- Splash Screen -->
+    <style name="AppTheme.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <!-- gif 이미지 넣고 시스템 슬립으로 시간주면 애니메이션 가능 -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/splash_logo</item>
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.Harupiece</item>
+    </style>
 </resources>
