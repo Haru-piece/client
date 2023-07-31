@@ -36,5 +36,30 @@
         android:id="@+id/mainListFragment"
         android:name="com.brudenell.harupiece.ui.MainListFragment"
         android:label="fragment_main_list"
-        tools:layout="@layout/fragment_main_list" />
+        tools:layout="@layout/fragment_main_list" >
+        <action
+            android:id="@+id/action_mainListFragment_to_createChallengeFragment"
+            app:destination="@id/createChallengeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_mainListFragment_to_challengeInfoFragment"
+            app:destination="@id/challengeInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/createChallengeFragment"
+        android:name="com.brudenell.harupiece.ui.CreateChallengeFragment"
+        android:label="fragment_create_challenge"
+        tools:layout="@layout/fragment_create_challenge" />
+    <fragment
+        android:id="@+id/challengeInfoFragment"
+        android:name="com.brudenell.harupiece.ui.ChallengeInfoFragment"
+        android:label="fragment_challenge_info"
+        tools:layout="@layout/fragment_challenge_info" />
 </navigation>

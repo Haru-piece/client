@@ -4,10 +4,13 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">#4CAF50</item>
+        <item name="android:windowBackground">@color/tertiary_green</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/tertiary_green</item>
     </style>
 
     <style name="Theme.Harupiece.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
-        <item name="colorPrimary">@color/material_dynamic_tertiary99</item>
+        <item name="colorPrimary">@color/tertiary_green</item>
     </style>
 
     <!-- Splash Screen -->
