@@ -2,24 +2,9 @@ package com.brudenell.harupiece
 
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
-
-data class User(
-    val email: String,
-    val username: String,
-    val password: String
-)
-
-data class SignResponse(
-    val token: String?,
-    val email: String,
-    val username: String?,
-    val password: String?,
-    val id: String?,
-    val challengeEntityTitle: String?,
-    val recentViewChallengeId: String?
-)
 
 interface ChallengeService {
     @POST("auth/signup")
@@ -27,4 +12,16 @@ interface ChallengeService {
 
     @POST("auth/signin")
     fun signIn(@Body user: User): Call<SignResponse>
+
+    @POST("challenge")
+    fun createChallenge(
+        @Header("Authorization") token: String,
+        @Body challengeRequest: ChallengeRequest
+    ): Call<ChallengeListResponse>
+
+    @POST("challenge/participate")
+    fun participateChallenge(
+        @Header("Authorization") token: String,
+        @Body participate: Participate
+    ): Call<ChallengeListResponse>
 }

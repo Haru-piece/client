@@ -48,6 +48,7 @@ class ChallengeListAdapter(): ListAdapter<Challenge, ChallengeListAdapter.Challe
                     val bundle = Bundle()
                     bundle.putString("title", challenge.title)
                     bundle.putInt("members", challenge.members)
+                    bundle.putBoolean("owner", false)
                     it.findNavController().navigate(R.id.action_mainListFragment_to_challengeInfoFragment, bundle)
                 }
                 textViewListItemChallengeTitle.text = challenge.title

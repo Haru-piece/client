@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.findNavController
+import com.brudenell.harupiece.ChallengeRequest
 import com.brudenell.harupiece.MainActivity
 import com.brudenell.harupiece.R
 import com.brudenell.harupiece.databinding.FragmentCreateChallengeBinding
@@ -32,8 +35,22 @@ class CreateChallengeFragment : Fragment() {
 
             buttonCreateChallengeSubmit.run {
                 setOnClickListener {
+                    val challengeRequest = ChallengeRequest(
+                        textInputEditTextCreateChallengeTitle.text.toString()
+                    )
 
-                    mainActivity.onBackPressedDispatcher.onBackPressed()
+                    mainActivity.challengeDto.createChallenge(challengeRequest) {
+                        if (error != null) {
+                            Toast.makeText(mainActivity, "챌린지 생성 실패", Toast.LENGTH_SHORT).show()
+                        } else {
+                            val bundle = Bundle()
+                            bundle.putString("title", it.data?.last()?.title)
+                            bundle.putInt("members", it.data?.last()?.participantCount ?: -1)
+                            bundle.putBoolean("owner", true)
+
+                            findNavController().navigate(R.id.action_createChallengeFragment_to_challengeInfoFragment, bundle)
+                        }
+                    }
                 }
             }
         }

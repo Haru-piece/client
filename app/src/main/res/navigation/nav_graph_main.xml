@@ -56,7 +56,16 @@
         android:id="@+id/createChallengeFragment"
         android:name="com.brudenell.harupiece.ui.CreateChallengeFragment"
         android:label="fragment_create_challenge"
-        tools:layout="@layout/fragment_create_challenge" />
+        tools:layout="@layout/fragment_create_challenge" >
+        <action
+            android:id="@+id/action_createChallengeFragment_to_challengeInfoFragment"
+            app:destination="@id/challengeInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/mainListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/challengeInfoFragment"
         android:name="com.brudenell.harupiece.ui.ChallengeInfoFragment"

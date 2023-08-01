@@ -26,6 +26,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+
+            <Button
+                android:id="@+id/buttonChallengeInfoParticipate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="챌린지 참여하기" />
         </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
