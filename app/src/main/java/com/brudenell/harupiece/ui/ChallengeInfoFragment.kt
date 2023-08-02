@@ -26,6 +26,7 @@ class ChallengeInfoFragment : Fragment() {
         val title = arguments?.getString("title")
         val members = arguments?.getInt("members")
         val owner = arguments?.getBoolean("owner")
+        val id = arguments?.getString("id") ?: ""
 
         binding.run {
             textViewChallengeInfoTitle.text = title
@@ -37,7 +38,7 @@ class ChallengeInfoFragment : Fragment() {
             buttonChallengeInfoParticipate.run {
                 setOnClickListener {
                     val participate = Participate(
-                        "2c9f8c6f89b00f600189b216a8160019"
+                        id
                     )
 
                     mainActivity.challengeDto.participateChallenge(participate) {

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.brudenell.harupiece.MainActivity
 import com.brudenell.harupiece.R
+import com.brudenell.harupiece.RetrofitManager
 import com.brudenell.harupiece.User
 import com.brudenell.harupiece.databinding.FragmentLoginBinding
 
@@ -34,7 +35,7 @@ class LoginFragment : Fragment() {
 
                 mainActivity.challengeDto.signIn(user) {
                     if (it.token != null) {
-                        mainActivity.token = "Bearer ${it.token}"
+                        RetrofitManager.token = "Bearer ${it.token}"
                     }
 
                     Toast.makeText(mainActivity, "로그인 되었습니다", Toast.LENGTH_SHORT).show()

@@ -1,7 +1,7 @@
 package com.brudenell.harupiece.model
 
 data class Challenge(
-    val id: Int,
+    val id: String,
     val title: String,
     val imageUrl: String,
     val category: String,

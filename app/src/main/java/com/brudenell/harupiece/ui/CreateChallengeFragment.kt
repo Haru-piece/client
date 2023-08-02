@@ -47,6 +47,7 @@ class CreateChallengeFragment : Fragment() {
                             bundle.putString("title", it.data?.last()?.title)
                             bundle.putInt("members", it.data?.last()?.participantCount ?: -1)
                             bundle.putBoolean("owner", true)
+                            bundle.putString("id", it.data?.last()?.id)
 
                             findNavController().navigate(R.id.action_createChallengeFragment_to_challengeInfoFragment, bundle)
                         }

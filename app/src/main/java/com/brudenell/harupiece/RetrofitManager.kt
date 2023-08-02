@@ -11,5 +11,7 @@ object RetrofitManager {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+    lateinit var token: String
+
     val challengeService: ChallengeService by lazy { retrofit.create(ChallengeService::class.java) }
 }

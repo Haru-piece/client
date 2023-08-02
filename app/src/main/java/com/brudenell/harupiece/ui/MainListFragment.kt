@@ -2,6 +2,7 @@ package com.brudenell.harupiece.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,10 +22,10 @@ class MainListFragment : Fragment() {
     lateinit var binding: FragmentMainListBinding
 
     val tempGroupList = listOf(
-        Group("신규 챌린지", ""),
-        Group("인기 챌린지", ""),
+        Group("참여 중인 챌린지(API)", ""),
+        Group("신규 챌린지(API)", "date"),
+        Group("인기 챌린지(API)", "count"),
         Group("최근 본 챌린지", ""),
-        Group("참여 중인 챌린지", ""),
         Group("운동 챌린지", ""),
         Group("게임 챌린지", ""),
         Group("공부 챌린지", ""),
@@ -37,13 +38,15 @@ class MainListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // 다른 fragment에서 뒤로 가기로 돌아오면 createView부터 실행 됨
+        
         mainActivity = activity as MainActivity
         binding = FragmentMainListBinding.inflate(layoutInflater)
 
         binding.run {
 
             recyclerViewMainList.run {
-                adapter = GroupListAdapter(tempGroupList)
+                adapter = GroupListAdapter(mainActivity, tempGroupList)
                 layoutManager = LinearLayoutManager(context)
                 setItemViewCacheSize(10)
             }
@@ -56,5 +59,15 @@ class MainListFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("azaaza", "onCreate")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("azaaza", "onDestroy")
     }
 }
