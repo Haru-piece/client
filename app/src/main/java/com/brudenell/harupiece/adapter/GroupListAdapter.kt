@@ -52,7 +52,8 @@ class GroupListAdapter(val mainActivity: MainActivity, val groupList: List<Group
                                         challenge.title,
                                         "https://picsum.photos/${150+adapterPosition}/${150+adapterPosition}",
                                         "카테고리${adapterPosition}",
-                                        challenge.participantCount ?: 0
+                                        challenge.participantCount ?: 0,
+                                        challenge.participantIds
                                     )
                                 )
                             }
@@ -68,7 +69,8 @@ class GroupListAdapter(val mainActivity: MainActivity, val groupList: List<Group
                                         challenge.title,
                                         "https://picsum.photos/${150+adapterPosition}/${150+adapterPosition}",
                                         "카테고리${adapterPosition}",
-                                        challenge.participantCount ?: 0
+                                        challenge.participantCount ?: 0,
+                                        challenge.participantIds
                                     )
                                 )
                             }
@@ -84,7 +86,8 @@ class GroupListAdapter(val mainActivity: MainActivity, val groupList: List<Group
                                         challenge.title,
                                         "https://picsum.photos/${150+adapterPosition}/${150+adapterPosition}",
                                         "카테고리${adapterPosition}",
-                                        challenge.participantCount ?: 0
+                                        challenge.participantCount ?: 0,
+                                        challenge.participantIds
                                     )
                                 )
                             }
@@ -99,7 +102,8 @@ class GroupListAdapter(val mainActivity: MainActivity, val groupList: List<Group
                                     "${group.name}${i}",
                                     "https://picsum.photos/${150+i+10*adapterPosition}/${150+i+10*adapterPosition}",
                                     "카테고리${adapterPosition}",
-                                    80
+                                    80,
+                                    emptyList()
                                 )
                             )
                         }

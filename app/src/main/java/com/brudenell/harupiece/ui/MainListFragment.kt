@@ -45,6 +45,19 @@ class MainListFragment : Fragment() {
 
         binding.run {
 
+            toolbarMainList.run {
+                inflateMenu(R.menu.main_menu)
+
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.mainMenuItemUserInfo -> {
+                            findNavController().navigate(R.id.action_mainListFragment_to_userInfoFragment)
+                        }
+                    }
+                    true
+                }
+            }
+
             recyclerViewMainList.run {
                 adapter = GroupListAdapter(mainActivity, tempGroupList)
                 layoutManager = LinearLayoutManager(context)
@@ -59,15 +72,5 @@ class MainListFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("azaaza", "onCreate")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("azaaza", "onDestroy")
     }
 }

@@ -37,4 +37,9 @@ interface ChallengeService {
         @Header("Authorization") token: String,
         @Query("sort") sort: String
     ): Call<ChallengeListResponse>
+
+    @GET("auth/mine")
+    fun getUserInfo(
+        @Header("Authorization") token: String
+    ): Call<UserInfoResponse>
 }

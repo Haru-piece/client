@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.brudenell.harupiece.MainActivity
 import com.brudenell.harupiece.Participate
 import com.brudenell.harupiece.R
@@ -27,8 +28,17 @@ class ChallengeInfoFragment : Fragment() {
         val members = arguments?.getInt("members")
         val owner = arguments?.getBoolean("owner")
         val id = arguments?.getString("id") ?: ""
+        val participantIds = arguments?.getStringArray("participantIds")
 
         binding.run {
+            toolbarChallengeInfo.run {
+                setNavigationIcon(R.drawable.navigate_before_24px)
+
+                setNavigationOnClickListener {
+                    findNavController().popBackStack()
+                }
+            }
+
             textViewChallengeInfoTitle.text = title
             textViewChallengeInfoMembers.text = "${members}명"
 
@@ -54,6 +64,12 @@ class ChallengeInfoFragment : Fragment() {
                             isEnabled = false
                         }
                     }
+                }
+            }
+
+            mainActivity.challengeDto.getUserInfo {
+                if (participantIds?.contains(it.data?.get(0)?.id) == true) {
+                    buttonChallengeInfoParticipate.text = "챌린지 탈퇴하기"
                 }
             }
         }

@@ -19,8 +19,13 @@ data class SignResponse(
     val username: String?,
     val password: String?,
     val id: String?,
-    val challengeEntityTitle: String?,
-    val recentViewChallengeId: String?
+    val challengeEntityTitle: List<String>?,
+    val recentViewChallengeId: List<String>?
+)
+
+data class UserInfoResponse(
+    val error: String?,
+    val data: List<SignResponse>?
 )
 
 // 나중에 수정
@@ -43,7 +48,8 @@ data class ChallengeResponse(
     val done: Boolean,
     val addedDate: String,
     val participantCount: Int?,
-    val challengerIds: List<String>
+    val participantIds: List<String>,
+    val category: String?
 )
 
 class ChallengeDto(val context: Context) {
@@ -177,6 +183,26 @@ class ChallengeDto(val context: Context) {
 
                 override fun onFailure(call: Call<ChallengeListResponse>, t: Throwable) {
                     Toast.makeText(context, "getChallenge 통신 실패", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    fun getUserInfo(callback: (UserInfoResponse) -> Unit) {
+        RetrofitManager.challengeService.getUserInfo(RetrofitManager.token)
+            .enqueue(object : Callback<UserInfoResponse> {
+                override fun onResponse(
+                    call: Call<UserInfoResponse>,
+                    response: Response<UserInfoResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            callback(it)
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
+                    Toast.makeText(context, "getUserInfo 통신 실패", Toast.LENGTH_SHORT).show()
                 }
             })
     }

@@ -6,4 +6,5 @@ data class Challenge(
     val imageUrl: String,
     val category: String,
     val members: Int,
+    val participantIds: List<String>
 )
