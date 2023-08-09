@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     val challengeDto by lazy { ChallengeDto(this) }
 
+    lateinit var username: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

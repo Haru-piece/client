@@ -33,10 +33,6 @@ data class ChallengeRequest(
     val title: String
 )
 
-data class Participate(
-    val id: String
-)
-
 data class ChallengeListResponse(
     val error: String?,
     val data: List<ChallengeResponse>?
@@ -50,6 +46,29 @@ data class ChallengeResponse(
     val participantCount: Int?,
     val participantIds: List<String>,
     val category: String?
+)
+
+data class RelationBadge(
+    val id: String,
+    val badgeName: String,
+    val userName: String
+)
+
+data class RelationBadgeResponse(
+    val error: String?,
+    val data: List<RelationBadge>?
+)
+
+data class RelationChallenge(
+    val id: String,
+    val challengeName: String,
+    val userName: String,
+    val success: Boolean
+)
+
+data class RelationChallengeResponse(
+    val error: String?,
+    val data: List<RelationChallenge>?
 )
 
 class ChallengeDto(val context: Context) {
@@ -121,8 +140,8 @@ class ChallengeDto(val context: Context) {
             })
     }
 
-    fun participateChallenge(participate: Participate, callback: (ChallengeListResponse) -> Unit) {
-        RetrofitManager.challengeService.participateChallenge(RetrofitManager.token, participate)
+    fun participateChallenge(challengeId: String, callback: (ChallengeListResponse) -> Unit) {
+        RetrofitManager.challengeService.participateChallenge(RetrofitManager.token, challengeId)
             .enqueue(object : Callback<ChallengeListResponse> {
                 override fun onResponse(
                     call: Call<ChallengeListResponse>,
@@ -198,11 +217,79 @@ class ChallengeDto(val context: Context) {
                         response.body()?.let {
                             callback(it)
                         }
+                    } else {
+                        Toast.makeText(context, "유저 정보 실패Dto", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
                     Toast.makeText(context, "getUserInfo 통신 실패", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    fun getRelationBadge(callback: (RelationBadgeResponse) -> Unit) {
+        RetrofitManager.challengeService.getRelationBadge(RetrofitManager.token)
+            .enqueue(object : Callback<RelationBadgeResponse> {
+                override fun onResponse(
+                    call: Call<RelationBadgeResponse>,
+                    response: Response<RelationBadgeResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            callback(it)
+                        }
+                    } else {
+                        Toast.makeText(context, "뱃지 관계 실패Dto", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<RelationBadgeResponse>, t: Throwable) {
+                    Toast.makeText(context, "getRelationBadge 통신 실패", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    fun withdrawChallenge(relationChallengeEntityId: String, callback: (ChallengeListResponse) -> Unit) {
+        RetrofitManager.challengeService.withdrawChallenge(RetrofitManager.token, relationChallengeEntityId)
+            .enqueue(object : Callback<ChallengeListResponse> {
+                override fun onResponse(
+                    call: Call<ChallengeListResponse>,
+                    response: Response<ChallengeListResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            callback(it)
+                        }
+                    } else {
+                        Toast.makeText(context, "챌린지 탈퇴 실패Dto", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<ChallengeListResponse>, t: Throwable) {
+                    Toast.makeText(context, "withdrawChallenge 통신 실패", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    fun getRelationChallenge(callback: (RelationChallengeResponse) -> Unit) {
+        RetrofitManager.challengeService.getRelationChallenge(RetrofitManager.token)
+            .enqueue(object : Callback<RelationChallengeResponse> {
+                override fun onResponse(
+                    call: Call<RelationChallengeResponse>,
+                    response: Response<RelationChallengeResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            callback(it)
+                        }
+                    } else {
+                        Toast.makeText(context, "챌린지 관계 실패Dto", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<RelationChallengeResponse>, t: Throwable) {
+                    Toast.makeText(context, "getRelationChallenge 통신 실패", Toast.LENGTH_SHORT).show()
                 }
             })
     }

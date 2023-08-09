@@ -15,6 +15,8 @@ class UserInfoFragment : Fragment() {
     lateinit var mainActivity: MainActivity
     lateinit var binding: FragmentUserInfoBinding
 
+    lateinit var username: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +35,18 @@ class UserInfoFragment : Fragment() {
 
             mainActivity.challengeDto.getUserInfo {
                 textViewUserInfoUserName.text = it.data?.get(0)?.id
+                username = it.data?.get(0)?.username ?: ""
+
+                mainActivity.challengeDto.getRelationBadge {
+                    if (it.error == null) {
+                        for (relationBadge in it.data ?: emptyList()) {
+                            if (relationBadge.userName == username) {
+                                textViewUserInfoBadge.text = relationBadge.badgeName
+                                break
+                            }
+                        }
+                    }
+                }
             }
         }
 

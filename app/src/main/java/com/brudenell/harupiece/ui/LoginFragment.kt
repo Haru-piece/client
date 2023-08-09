@@ -33,6 +33,8 @@ class LoginFragment : Fragment() {
                     textInputEditTextLoginPw.text.toString()
                 )
 
+                mainActivity.username = user.username
+
                 mainActivity.challengeDto.signIn(user) {
                     if (it.token != null) {
                         RetrofitManager.token = "Bearer ${it.token}"

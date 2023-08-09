@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.brudenell.harupiece.MainActivity
-import com.brudenell.harupiece.Participate
 import com.brudenell.harupiece.R
 import com.brudenell.harupiece.databinding.FragmentChallengeInfoBinding
 
@@ -16,6 +15,8 @@ class ChallengeInfoFragment : Fragment() {
 
     lateinit var mainActivity: MainActivity
     lateinit var binding: FragmentChallengeInfoBinding
+    var participateEnabled = true
+    lateinit var relationChallengeId: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,26 +43,56 @@ class ChallengeInfoFragment : Fragment() {
             textViewChallengeInfoTitle.text = title
             textViewChallengeInfoMembers.text = "${members}명"
 
-            if (owner == true)
-                buttonChallengeInfoParticipate.isEnabled = false
+            if (owner == true) {
+                buttonChallengeInfoParticipate.text = "챌린지 탈퇴하기"
+                participateEnabled = false
+            }
 
             buttonChallengeInfoParticipate.run {
                 setOnClickListener {
-                    val participate = Participate(
-                        id
-                    )
+                    if (participateEnabled) {
+                        val challengeId = id
 
-                    mainActivity.challengeDto.participateChallenge(participate) {
-                        if (it.error != null) {
-                            Toast.makeText(mainActivity, "챌린지 참가 실패", Toast.LENGTH_SHORT).show()
-                        } else {
-                            for (challenge in it.data ?: emptyList()) {
-                                if (challenge.id == participate.id) {
-                                    textViewChallengeInfoTitle.text = challenge.title
-                                    textViewChallengeInfoMembers.text = "${challenge.participantCount}"
+                        mainActivity.challengeDto.participateChallenge(challengeId) {
+                            if (it.error != null) {
+                                Toast.makeText(mainActivity, "챌린지 참가 실패", Toast.LENGTH_SHORT).show()
+                            } else {
+                                for (challenge in it.data ?: emptyList()) {
+                                    if (challenge.id == challengeId) {
+                                        textViewChallengeInfoTitle.text = challenge.title
+                                        textViewChallengeInfoMembers.text =
+                                            "${challenge.participantCount}"
+                                    }
+                                }
+                                text = "챌린지 탈퇴하기"
+                                participateEnabled = false
+                            }
+                        }
+                    } else {
+                        mainActivity.challengeDto.getRelationChallenge {
+                            if (it.error == null) {
+                                for (relation in it.data ?: emptyList()) {
+                                    if (relation.challengeName == title && relation.userName == mainActivity.username) {
+                                        relationChallengeId = relation.id
+
+                                        mainActivity.challengeDto.withdrawChallenge(relationChallengeId) {
+                                            if (error != null) {
+                                                Toast.makeText(mainActivity, "탈퇴 오류", Toast.LENGTH_SHORT).show()
+                                            }
+                                            for (challenge in it.data ?: emptyList()) {
+                                                if (challenge.id == id) {
+                                                    textViewChallengeInfoMembers.text = "${challenge.participantCount}"
+                                                }
+                                            }
+
+                                            text = "챌린지 참가하기"
+                                            participateEnabled = true
+                                        }
+
+                                        break
+                                    }
                                 }
                             }
-                            isEnabled = false
                         }
                     }
                 }
@@ -70,6 +101,7 @@ class ChallengeInfoFragment : Fragment() {
             mainActivity.challengeDto.getUserInfo {
                 if (participantIds?.contains(it.data?.get(0)?.id) == true) {
                     buttonChallengeInfoParticipate.text = "챌린지 탈퇴하기"
+                    participateEnabled = false
                 }
             }
         }

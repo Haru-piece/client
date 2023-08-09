@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ChallengeService {
@@ -21,13 +22,13 @@ interface ChallengeService {
         @Body challengeRequest: ChallengeRequest
     ): Call<ChallengeListResponse>
 
-    @POST("challenge/participate")
+    @POST("challenge/participate/{challengeId}")
     fun participateChallenge(
         @Header("Authorization") token: String,
-        @Body participate: Participate
+        @Path("challengeId") challengeId: String
     ): Call<ChallengeListResponse>
 
-    @GET("challenge")
+    @GET("challenge/all/participate")
     fun userChallenge(
         @Header("Authorization") token: String
     ): Call<ChallengeListResponse>
@@ -42,4 +43,20 @@ interface ChallengeService {
     fun getUserInfo(
         @Header("Authorization") token: String
     ): Call<UserInfoResponse>
+
+    @GET("relation/badge")
+    fun getRelationBadge(
+        @Header("Authorization") token: String
+    ): Call<RelationBadgeResponse>
+
+    @POST("challenge/out/{relationChallengeEntityId}")
+    fun withdrawChallenge(
+        @Header("Authorization") token: String,
+        @Path("relationChallengeEntityId") relationChallengeEntityId: String
+    ): Call<ChallengeListResponse>
+
+    @GET("relation/challenge")
+    fun getRelationChallenge(
+        @Header("Authorization") token: String
+    ): Call<RelationChallengeResponse>
 }
